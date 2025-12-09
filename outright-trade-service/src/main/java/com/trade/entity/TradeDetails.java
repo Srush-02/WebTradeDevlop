@@ -1,17 +1,17 @@
 package com.trade.entity;
 
-import java.beans.Transient;
-
 import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Transient;
+
 	
 	@Entity
 	@Data
@@ -22,15 +22,18 @@ import lombok.NoArgsConstructor;
 		@Id
 		@Column(name = "traderUUID")
 		@JsonProperty("traderUUID")
+		@NotNull
 		private String traderUUID;
 
 		@Column(name = "buyer")
 		@JsonProperty("buyer")
+		@NotNull
 		private String buyer;
 		
 
 		@Column(name = "seller")
 		@JsonProperty("seller")
+		@NotNull
 		private String seller;
 
 
@@ -45,6 +48,9 @@ import lombok.NoArgsConstructor;
 		@Column(name = "price")
 		@JsonProperty("price")
 		private double price;
+		
+		@Transient
+		private boolean isSave = true;
 
 
 		@Column(name = "prompt_date")
@@ -54,7 +60,6 @@ import lombok.NoArgsConstructor;
 
 		@Column(name = "created_ts")
 		@JsonProperty("created_ts")
-		@NotNull
 		private String createdTimestamp;
 
 		@Column(name = "last_modified_ts")
@@ -76,11 +81,6 @@ import lombok.NoArgsConstructor;
 		private String comment;
 
 		
-		//@Transient
-		private boolean isSave = true;
-		
-		//TODO houseTrade
-		
 		public boolean isSave() {
 			return isSave;
 		}
@@ -92,7 +92,7 @@ import lombok.NoArgsConstructor;
 
 		@Override
 		public boolean isNew() {
-			return false;
+			return isSave;
 		}
 
 }

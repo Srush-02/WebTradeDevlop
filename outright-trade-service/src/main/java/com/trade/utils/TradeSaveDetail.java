@@ -5,27 +5,30 @@ import java.util.Map;
 
 import com.trade.Repository.TraderRepository;
 import com.trade.entity.TradeDetails;
+import com.trade.mapper.MapStructMapper;
 
 public class TradeSaveDetail {
 
 	private CustomLogger logger;
 	
-	private TraderRepository repo;
+	private TraderRepository repository;
+	
+	private MapStructMapper mapper;
 	
 	public void saveOutrightTrade(List<OutrightData> msgData, Map<String, OutrightData> outrightTaderMap, String user) {
 
 
 		for (OutrightData currentRow : msgData) {
 			try {
-				TradeDetails tradeDetails = dbEntityConverter.orderDtoToSaveToDB(currentRow);
 
-				/*
-				 * if (orderMessageType == orderMsgType.CANCEL || orderMessageType ==
-				 * orderMsgType.MODIFY) { tradeDetails.setSave(false); }
-				 */
+				TradeDetails tradeDetails = mapper.tradeDtoToSaveToDB(currentRow);
 
-				repo.save(tradeDetails);
-				currentRow.setOrderStatus(currentRow.trad.SUCCESS);
+				if (currentRow.getStatus().equalsIgnoreCase("CANCEL")  || currentRow.getStatus().equalsIgnoreCase("MODIFY")) {
+					tradeDetails.setSave(false);
+				}
+
+				repository.save(tradeDetails);
+				//currentRow.setOrderStatus(currentRow.trad.SUCCESS);
 
 			} catch (Exception e) {
 				logger.error("TradeSaveDetail saveOutrightTrade problem saving trade", e, currentRow.getTradeUUID(), user);
