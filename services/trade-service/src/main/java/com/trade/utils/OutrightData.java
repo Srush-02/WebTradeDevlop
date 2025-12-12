@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OutrightData {
 
-	 private String tradeUUID;
+	 private String traderUUID;
 	 
 	 private String metal;
 	 
@@ -29,12 +29,15 @@ public class OutrightData {
 	 
 	 private int rowNumber;
 	 
+	 private String lastModifiedTimestamp;
 	 
 	 private String lastModifiedBy;
 	 
 	 private String createdBy;
 	 
 	private TradeMsgType tradeMsgType;
+	
+	private String tradeDate;
 	 
 	private enum TradeMsgType {
 		 NEW,
@@ -43,11 +46,11 @@ public class OutrightData {
 	}
    
 
-       
+       //TODO add toString again
 	 
 	@Override
 	public String toString() {
-		return "OutrightData [tradeUUID=" + tradeUUID + ", metal=" + metal + ", buyer=" + buyer + ", seller=" + seller
+		return "OutrightData [traderUUID=" + traderUUID + ", metal=" + metal + ", buyer=" + buyer + ", seller=" + seller
 				+ ", amount=" + amount + ", comments=" + comments + ", lots=" + lots + ", createdTimestamp="
 				+ createdTimestamp + ", price=" + price + ", status=" + status + ", rowNumber=" + rowNumber + ", lastModifiedBy=" + lastModifiedBy + "]";
 	}

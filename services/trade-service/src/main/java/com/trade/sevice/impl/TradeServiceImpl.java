@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.trade.services.TradeService;
@@ -36,9 +35,7 @@ public class TradeServiceImpl implements TradeService {
 	public JsonNode createTrade(List<OutrightData> msgData, String userName) {
 
 		String localOrderStatus = msgData.get(0).getStatus();
-		logger.debug("createTrade validate " + localOrderStatus, "-", userName);
 
-		System.out.println("localOrderStatus-----"+localOrderStatus);
 		if (localOrderStatus.equalsIgnoreCase("NEW")) {
 			return createTrade(msgData, userName, new HashMap<>());
 		} else if (localOrderStatus.equalsIgnoreCase("AMEND")) {
@@ -57,24 +54,20 @@ public class TradeServiceImpl implements TradeService {
 		try {
 			logger.debug("TradeController validate " + msgData, "-", userName);
 
-			System.out.println("localOrderStatus---validate--");
+			ObjectNode validationObj = (ObjectNode) finalValidation(msgData, userName);
 
-		ObjectNode validationObj = (ObjectNode) finalValidation(msgData, userName);
+			resultSet = validationObj.size() == 0 ? JacksonUtil.mapper.createObjectNode() : validationObj;
+			resultSet.put("VALID_ORDER_FIELD", "");
+			resultSet.put("USER_LOGIN_FIELD", true);
 
-		System.out.println("check validation:-------------- " + validationObj);
-		resultSet = validationObj.size() == 0 ? JacksonUtil.mapper.createObjectNode() : validationObj;
-		resultSet.put("VALID_ORDER_FIELD", "");
-		resultSet.put("USER_LOGIN_FIELD", true);
+			logger.debug("TradeServiceImpl createTrade after finalValidation" + resultSet.toString(), "-", userName);
+System.out.println("size--------------"+validationObj.size());
+			if (validationObj.size() != 0) {
+				return resultSet;
+			}
+			System.out.println("size-----after---------");
 
-		logger.debug("TradeServiceImpl createTrade after finalValidation" + resultSet.toString(), "-",
-				userName);
-
-		if (validationObj.size() != 0) {
-			return resultSet;
-		}
-		
-
-		tradeDetails.saveTrade(msgData, userName);
+			tradeDetails.saveTrade(msgData, userName);
 		} catch (Exception e) {
 			logger.error("TradeServiceImpl createTrade Exception ", e, "-", userName);
 		}

@@ -87,14 +87,18 @@ public class TradeDetails implements Persistable<String>{
 	 * public boolean isSave() { return isSave; }
 	 */
 
+	public boolean isSave() {
+		return isSave;
+	}
+	
 	@Override
 	public String getId() {
-		return this.traderUUID;
+	 return this.traderUUID;
 	}
 
 	@Override
 	public boolean isNew() {
-        return this.traderUUID == null || this.isSave;
+		return this.traderUUID == null;
 	}
 
 }
