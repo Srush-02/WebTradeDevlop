@@ -17,7 +17,7 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 import org.springframework.context.annotation.Configuration;
 
-import com.trade.TraderServiceApplication;
+import com.trade.TradeServiceApplication;
 
 import jakarta.annotation.PostConstruct;
 
@@ -59,7 +59,7 @@ public class CustomLogger {
             model = reader.read(new FileReader("pom.xml"), true);
         } catch (Exception e) {
             model = reader.read(new InputStreamReader(
-            		TraderServiceApplication.class.getResourceAsStream(
+            		TradeServiceApplication.class.getResourceAsStream(
                             "/META-INF/maven/bmx/trader-service/pom.xml"
                     )
             ));
