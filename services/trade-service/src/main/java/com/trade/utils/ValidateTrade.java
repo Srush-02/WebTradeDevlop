@@ -1,6 +1,11 @@
 package com.trade.utils;
 
+import java.time.Instant;
+
 import org.springframework.stereotype.Component;
+
+import com.trade.database.sqlserver.entity.TradeDetails;
+import com.trade.database.sqlserver.repository.TradeRepository;
 
 import lombok.AllArgsConstructor;
 import tools.jackson.databind.node.ObjectNode;
@@ -8,13 +13,14 @@ import tools.jackson.databind.node.ObjectNode;
 @Component
 @AllArgsConstructor
 public class ValidateTrade {
+	
+	private TradeRepository repo;
 
 	public void finalCommonDetailValidation(OutrightData msgData, ObjectNode rowErrors, String userName) {
 		
 		int lots = msgData.getLots();
 		
 		String buyer = msgData.getBuyer();
-		
 		
 		String seller  = msgData.getSeller();
 		
@@ -31,7 +37,7 @@ public class ValidateTrade {
 		}
 		
 		
-		if (msgData.getComments() != null && !msgData.getComments().toString().matches("^.{1,128}$|^$")) {
+		if (msgData.getComment() != null && !msgData.getComment().toString().matches("^.{1,128}$|^$")) {
 			setErrorObj("comments", AppConstant.INVALID_COMMENTS, rowErrors);
 		}
 		
@@ -41,7 +47,7 @@ public class ValidateTrade {
 		
 		String price = Double.toString(msgData.getPrice());
 
-		if (!price.matches("(^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$)")){
+		if (!price.matches("(^\\s*(?=.*[1-9])\\d*(?:\\.\\d{1,2})?\\s*$)")){ //Regex
 			setErrorObj("price", AppConstant.INVALID_PRICE, rowErrors);
 		}
 
@@ -55,5 +61,34 @@ public class ValidateTrade {
 		rowErrors.put(label, message);
 
 	}
+	
+	
+	public String checkLastModifiedTimeValid(String tradeUUID, long eventEpochTime, String user) {
+
+		String validOrder = "";
+		
+		TradeDetails tradeResponse = repo.findBytraderUUID(tradeUUID);
+
+		System.out.println("tradeResponse------->>"+tradeResponse);
+		if (tradeResponse == null || tradeResponse.getLastModifiedTimestamp().isEmpty()) {
+			validOrder = tradeUUID + ":" +AppConstant.TRADER_ERROR;
+			return validOrder;
+		}
+
+		long dbTs = Long.parseLong(tradeResponse.getLastModifiedTimestamp());
+		long now = Instant.now().toEpochMilli();
+		long timeDiff = now - dbTs;
+		if (tradeResponse.getTraderStatus().equalsIgnoreCase("EXECUTING") && (timeDiff < 30000)) {
+			validOrder = tradeUUID + ":" +tradeResponse.getTradeType() + AppConstant.IN_PROCESS_ERROR;
+			return validOrder;
+		}
+
+		/*
+		 * if (dbTs != eventEpochTime) { validOrder = tradeUUID + ":"
+		 * +AppConstant.UPDATED_ORDER_ERROR; }
+		 */
+		return validOrder;
+	}
+
 	
 }

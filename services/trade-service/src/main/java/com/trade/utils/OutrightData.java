@@ -15,9 +15,7 @@ public class OutrightData {
 	 
 	 private String seller;
 	 
-	 private String amount;
-	 
-	 private String comments;
+	 private String comment;
 	 
 	 private int lots;
 	 
@@ -25,7 +23,7 @@ public class OutrightData {
 	 
 	 private double price;
 	 
-	 private String status;
+	 private String tradeType;
 	 
 	 private int rowNumber;
 	 
@@ -35,23 +33,22 @@ public class OutrightData {
 	 
 	 private String createdBy;
 	 
-	private TradeMsgType tradeMsgType;
+	private String traderStatus;
 	
 	private String tradeDate;
-	 
-	private enum TradeMsgType {
-		 NEW,
-        MODIFY,
-        CANCEL
-	}
-   
 
-       //TODO add toString again
-	 
 	@Override
 	public String toString() {
 		return "OutrightData [traderUUID=" + traderUUID + ", metal=" + metal + ", buyer=" + buyer + ", seller=" + seller
-				+ ", amount=" + amount + ", comments=" + comments + ", lots=" + lots + ", createdTimestamp="
-				+ createdTimestamp + ", price=" + price + ", status=" + status + ", rowNumber=" + rowNumber + ", lastModifiedBy=" + lastModifiedBy + "]";
+				+ ", comment=" + comment + ", lots=" + lots + ", createdTimestamp="
+				+ createdTimestamp + ", price=" + price + ", tradeType=" + tradeType + ", rowNumber=" + rowNumber
+				+ ", lastModifiedTimestamp=" + lastModifiedTimestamp + ", lastModifiedBy=" + lastModifiedBy
+				+ ", createdBy=" + createdBy + ", traderStatus=" + traderStatus + ", tradeDate=" + tradeDate + "]";
 	}
+	 
+
+
+       //TODO add toString again
+	 
+	
 }

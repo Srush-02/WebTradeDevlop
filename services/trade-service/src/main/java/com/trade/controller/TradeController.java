@@ -41,6 +41,7 @@ public class TradeController  {
 		JsonNode resultSet = JacksonUtil.mapper.createArrayNode();
 		
 		try {
+			System.out.println("msgData------>>"+msgData);
 			resultSet = tradeService.createTrade(msgData, user);
 			logger.debug("TradeController resultSet " + msgData, "-", user);
 

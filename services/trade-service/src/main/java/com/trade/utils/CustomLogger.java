@@ -69,32 +69,47 @@ public class CustomLogger {
     
     
     public void debug(String msg, String correlationId, String user) {
-        log(Level.FINE, msg, null, correlationId, user);
+    	debug(Level.FINE, msg, correlationId, user);
     }
 
     public void info(String msg, String correlationId, String user) {
-        log(Level.INFO, msg, null, correlationId, user);
+    	debug(Level.INFO, msg, correlationId, user);
     }
 
     public void warn(String msg, String correlationId, String user) {
-        log(Level.WARNING, msg, null, correlationId, user);
+    	debug(Level.WARNING, msg, correlationId, user);
     }
 
     public void error(String msg, Exception error, String correlationId, String user) {
-        log(Level.SEVERE, msg, error, correlationId, user);
+    	error(Level.SEVERE, msg, error, correlationId, user);
     }
     
-    private void log(Level level, String message, Exception ex,
+    
+    private void error(Level level, String message, Exception ex,
             String correlationId, String user) {
 
 		try {
 			LogRecord record = new LogRecord(level, message);
-			record.setParameters(new Object[] { correlationId, appName, version, user, machineName, machineIP,
+			record.setParameters(new Object[] { correlationId, appName, version, message, ex, user, machineName, machineIP,
 					Instant.now().toEpochMilli() });
 
 			if (ex != null) {
 				record.setThrown(ex);
 			}
+
+			loggerConfig.log(record);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+    
+    private void debug(Level level, String message, String correlationId, String user) {
+
+		try {
+			LogRecord record = new LogRecord(level, message);
+			record.setParameters(new Object[] { correlationId, appName, version, message, user, machineName, machineIP,
+					Instant.now().toEpochMilli() });
 
 			loggerConfig.log(record);
 

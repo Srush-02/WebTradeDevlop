@@ -1,18 +1,10 @@
 package com.trade.database.sqlserver.entity;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -81,6 +73,18 @@ public class TradeDetails implements Persistable<String>{
 	@Column(name = "comment")
 	@JsonProperty("comment")
 	private String comment;
+	
+	
+	@Column(name = "traderStatus")
+	@JsonProperty("traderStatus")
+	private String traderStatus;
+	
+	
+	@Column(name = "tradeType")
+	@JsonProperty("tradeType")
+	private String tradeType;
+	
+	
 
 	
 	/*

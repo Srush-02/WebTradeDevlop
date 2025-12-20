@@ -36,26 +36,27 @@ public class TradeSaveDetails {
 
 	
 	public void saveTrade(List<OutrightData> msgData, String user) {
-		System.out.println("saveTrade-------------");
-
 
 		for (OutrightData currentRow : msgData) {
 			try {
 				String time = Instant.now().toEpochMilli() + "";
-				String status = currentRow.getStatus();
+				String status = currentRow.getTradeType();
 				LocalDate date =  getTradeDate(status);
 
-				saveTradeDetails(currentRow, user,time, date);
-				System.out.println("currentRow---"+currentRow.getTraderUUID());
+				saveTradeDetails(currentRow, time, user, date);
+				System.out.println("currentRow--trade id-"+currentRow.getTraderUUID()+ "currentRow---"+currentRow);
 
 				TradeDetails tradeDetails = mapper.tradeDtoToSaveToDB(currentRow);
-System.out.println("tradeDetails---"+tradeDetails);
+				System.out.println("tradeDetails---"+tradeDetails);
 				if (status.equalsIgnoreCase("CANCEL")  || status.equalsIgnoreCase("MODIFY")) {
 					tradeDetails.setSave(false);
 				}
 				repository.save(tradeDetails);
+				currentRow.setTraderStatus("SUCCESS");
+
 
 			} catch (Exception e) {
+				currentRow.setTraderStatus("FAILED");
 				logger.error("TradeSaveDetail saveOutrightTrade problem saving trade", e, currentRow.getTraderUUID(), user);
 			}
 
@@ -74,7 +75,7 @@ System.out.println("tradeDetails---"+tradeDetails);
 	}
 	
 	public void saveTradeDetails(OutrightData currentRow, String time, String user, LocalDate tradeDate) {
-		String tradeStatus = currentRow.getStatus();
+		String tradeStatus = currentRow.getTradeType();
 		String key = null;
 
 		switch (tradeStatus) {
@@ -93,12 +94,14 @@ System.out.println("tradeDetails---"+tradeDetails);
 			currentRow.setLastModifiedTimestamp(time);
 			break;
 		case "CANCEL" :
-			currentRow.setLastModifiedBy(user);
+			currentRow.setLastModifiedBy(user);//TODO need to check
 			currentRow.setLastModifiedTimestamp(time);
 			break;
 		default:
 			break;
 		}
+		currentRow.setTraderStatus("EXECUTING");
+
 	}
 
 }

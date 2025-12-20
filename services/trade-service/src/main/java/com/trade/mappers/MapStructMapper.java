@@ -1,6 +1,7 @@
 package com.trade.mappers;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
@@ -15,8 +16,7 @@ public interface MapStructMapper {
 	TradeDetails tradeDtoToSaveToDB(OutrightData currentRow);
 	
 	
-	@Named("setNullIfEmptyString")
-	static String setNullIfEmptyString(String value) {
+	default  String setNullIfEmptyString(String value) {
 		return value.isEmpty() ? null : value;
 	}
 }
