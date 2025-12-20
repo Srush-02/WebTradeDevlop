@@ -1,8 +1,8 @@
 package com.trade.mappers;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
 import com.trade.database.sqlserver.entity.TradeDetails;
@@ -19,5 +19,10 @@ public interface MapStructMapper {
 	default  String setNullIfEmptyString(String value) {
 		return value.isEmpty() ? null : value;
 	}
+	
+	 
+		OutrightData orderDetailsToOrderTraderBean(TradeDetails orderDetail);
+	 List<OutrightData> tradeDetailListToreturnList(List<TradeDetails> orderDetailList);
+
 }
 

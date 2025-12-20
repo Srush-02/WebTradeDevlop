@@ -1,5 +1,6 @@
 package com.trade.database.sqlserver.repository;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
@@ -12,14 +13,14 @@ import com.trade.database.sqlserver.entity.TradeDetails;
 
 
 @Repository
-public interface TradeRepository extends JpaRepository<TradeDetails, String>, QuerydslPredicateExecutor<TradeDetails>{
+public interface TradeRepository extends JpaRepository<TradeDetails, String>{
 	
 	TradeDetails findBytraderUUID(String tradeUUIDsList);
 	
-    List<TradeDetails> findByBuyerInAndCreatedTimestampBetweenOrderByCreatedTimestampDesc(List<String> buyers, long fromDate, String toDate);
-
     
     List<TradeDetails> findByBuyerInAndCreatedTimestampBetween(List<String> buyers, long fromDate, long toDate);
+
+	Collection<? extends TradeDetails> findByCreatedTimestampBetween(long fromDate, long toDate);
 
 
 	

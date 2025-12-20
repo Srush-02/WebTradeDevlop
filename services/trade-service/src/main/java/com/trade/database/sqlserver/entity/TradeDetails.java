@@ -3,8 +3,11 @@ package com.trade.database.sqlserver.entity;
 import org.springframework.data.domain.Persistable;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.trade.utils.DateHandler;
+import com.trade.utils.DateTimeToStringConverter;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -50,10 +53,19 @@ public class TradeDetails implements Persistable<String>{
 	
 	@Transient
 	private boolean isSave = true;
+	
+	/*
+	 * @Column(insertable = false, updatable = false, name = "last_modified_ts")
+	 * 
+	 * @JsonProperty("eventTimestamp")
+	 * 
+	 * @Convert(converter = DateHandler.class) private long eventTimestamp;
+	 */
 
 
 	@Column(name = "created_ts")
 	@JsonProperty("created_ts")
+	@Convert(converter = DateTimeToStringConverter.class)
 	private String createdTimestamp;
 
 	@Column(name = "last_modified_ts")
