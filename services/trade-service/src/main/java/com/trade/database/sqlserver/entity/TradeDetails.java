@@ -65,7 +65,6 @@ public class TradeDetails implements Persistable<String>{
 
 	@Column(name = "created_ts")
 	@JsonProperty("created_ts")
-	@Convert(converter = DateTimeToStringConverter.class)
 	private String createdTimestamp;
 
 	@Column(name = "last_modified_ts")

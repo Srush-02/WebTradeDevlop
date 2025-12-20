@@ -30,13 +30,12 @@ public class TradeRecordImpl implements TradeRecordService{
 
 
 	@Override
-	public List loadTradeData(List<String> accountlist, String daysFilter, String fromDate, String toDate, String user) {
+	public List loadTradeData(List<String> accountlist, String fromDate, String toDate, String user) {
 		List<TradeDetails> tradeDetailList = new ArrayList<>();
 		List<OutrightData> returnList = new ArrayList<>();
 
 		tradeDetailList = getDateBasedTrades(fromDate, toDate, accountlist, tradeDetailList, user);
 		returnList.addAll(mapper.tradeDetailListToreturnList(tradeDetailList));
-System.out.println("returnList---->>"+returnList);
 		return returnList;
 	}
 
@@ -55,7 +54,6 @@ System.out.println("returnList---->>"+returnList);
 		        .atZone(ZoneId.of("UTC"))
 		        .toInstant()
 		        .toEpochMilli();
-		System.out.println("toDate---->>"+toDate+ "fromDate---->>"+fromDate);
 
 		if (!accountlist.isEmpty()) {
 			List<String> listToSend = null;

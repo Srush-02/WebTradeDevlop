@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,14 +35,15 @@ public class TradeRecordController {
 	@GetMapping(value = "/order-monitor", produces = "application/json")
 	public ResponseEntity<ApiHttpResponse> loadTradeData(
 			@RequestParam("account") List<String> account, 
-			@RequestParam(name = "daysFilter", defaultValue = "All", required = false) String daysFilter,
-			@RequestParam("FD") String fromDate, @RequestParam("TD") String toDate,
-			@RequestHeader("x-username") String user) {
+			@RequestParam("FD") String fromDate, @RequestParam("TD") String toDate) {
 		List resultSet = new ArrayList<>();
-		
+		Authentication authentication =
+	            SecurityContextHolder.getContext().getAuthentication();
+
+	    String user = authentication.getName();
 		logger.debug("TradeController loadTradeData : " + "account: " + account, "-", user);
 		
-		resultSet = tradeService.loadTradeData(account, daysFilter, fromDate, toDate, user);
+		resultSet = tradeService.loadTradeData(account, fromDate, toDate, user);
 		return new ResponseEntity<>(new ApiHttpResponse(true, 200, JacksonUtil.mapper.valueToTree(resultSet)),
 				HttpStatus.OK);
 
