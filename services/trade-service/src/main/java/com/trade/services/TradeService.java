@@ -9,5 +9,4 @@ import tools.jackson.databind.JsonNode;
 public interface TradeService {	
 	
 	JsonNode createTrade(List<OutrightData> msgData, String user);
-
 }

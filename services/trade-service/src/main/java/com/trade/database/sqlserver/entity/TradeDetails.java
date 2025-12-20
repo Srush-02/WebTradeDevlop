@@ -84,12 +84,6 @@ public class TradeDetails implements Persistable<String>{
 	@JsonProperty("tradeType")
 	private String tradeType;
 	
-	
-
-	
-	/*
-	 * public boolean isSave() { return isSave; }
-	 */
 
 	public boolean isSave() {
 		return isSave;
