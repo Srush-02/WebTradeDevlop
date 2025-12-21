@@ -1,6 +1,6 @@
 package com.trade.utils;
 
-import tools.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JacksonUtil {
 	

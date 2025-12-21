@@ -4,11 +4,11 @@ import java.time.Instant;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.trade.database.sqlserver.entity.TradeDetails;
 import com.trade.database.sqlserver.repository.TradeRepository;
 
 import lombok.AllArgsConstructor;
-import tools.jackson.databind.node.ObjectNode;
 
 @Component
 @AllArgsConstructor

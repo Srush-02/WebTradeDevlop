@@ -59,7 +59,7 @@ public class TradeRecordImpl implements TradeRecordService{
 			List<String> listToSend = null;
 			while (!accountlist.isEmpty()) {
 				listToSend = accountlist.stream().limit(1000).collect(Collectors.toList());
-				tradeDetailList.addAll(repo.findByBuyerInAndCreatedTimestampBetween(listToSend, fromDate, toDate));//TODO need to check
+				tradeDetailList.addAll(repo.findTrades(listToSend, fromDate, toDate));//TODO need to check
 				accountlist = accountlist.stream().skip(1000).collect(Collectors.toList());
 			}
 
