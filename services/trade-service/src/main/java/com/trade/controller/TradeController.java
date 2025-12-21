@@ -39,7 +39,7 @@ public class TradeController  {
 
     }
 	@PostMapping(value = "/save", consumes = "application/json")
-	public ResponseEntity<ApiHttpResponse> createOutrightTrade(@RequestBody  List<OutrightData> msgData) {
+	public ResponseEntity<ApiHttpResponse> createTrade(@RequestBody  List<OutrightData> msgData) {
 
 		Authentication authentication =
 	            SecurityContextHolder.getContext().getAuthentication();
