@@ -46,9 +46,6 @@ public class OutrightData {
 				+ ", createdBy=" + createdBy + ", traderStatus=" + traderStatus + ", tradeDate=" + tradeDate + "]";
 	}
 	 
-
-
-       //TODO add toString again
 	 
 	
 }

@@ -45,11 +45,9 @@ public class TradeServiceImpl implements TradeService {
 				if (!tradeType.equalsIgnoreCase("NEW")) {
 				    Instant instant = Instant.parse(currentTradeValue.getLastModifiedTimestamp());
 				    long epochMillis = instant.toEpochMilli();
-					System.out.println("validTrade--currentTradeValue---->"+currentTradeValue);
 
 					String validTrade = validateData.checkLastModifiedTimeValid(currentTradeValue.getTraderUUID(), epochMillis, userName);
 					
-					System.out.println("validTrade------>"+validTrade);
 					if (!validTrade.isEmpty()) {
 						resultSet.put(AppConstant.VALID_TRADE_FIELD, validTrade);
 						resultSet.put(AppConstant.USER_LOGIN_FIELD, true);

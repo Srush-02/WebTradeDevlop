@@ -1,7 +1,5 @@
 package com.trade.utils;
 
-import java.time.Instant;
-
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -69,24 +67,10 @@ public class ValidateTrade {
 		
 		TradeDetails tradeResponse = repo.findBytraderUUID(tradeUUID);
 
-		System.out.println("tradeResponse------->>"+tradeResponse);
 		if (tradeResponse == null || tradeResponse.getLastModifiedTimestamp().isEmpty()) {
 			validOrder = tradeUUID + ":" +AppConstant.TRADER_ERROR;
 			return validOrder;
 		}
-
-		long dbTs = Long.parseLong(tradeResponse.getLastModifiedTimestamp());
-		long now = Instant.now().toEpochMilli();
-		long timeDiff = now - dbTs;
-		if (tradeResponse.getTraderStatus().equalsIgnoreCase("EXECUTING") && (timeDiff < 30000)) {
-			validOrder = tradeUUID + ":" +tradeResponse.getTradeType() + AppConstant.IN_PROCESS_ERROR;
-			return validOrder;
-		}
-
-		/*
-		 * if (dbTs != eventEpochTime) { validOrder = tradeUUID + ":"
-		 * +AppConstant.UPDATED_ORDER_ERROR; }
-		 */
 		return validOrder;
 	}
 

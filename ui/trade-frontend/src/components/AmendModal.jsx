@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 
-const METAL_OPTIONS = ["Gold", "Silver", "Platinum", "Palladium"];
+const METAL_OPTIONS = ["1AHD","AHD", "CAD", "1CAD", "1PBD", "PBD"];
 
 const AmendModal = ({ trade, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
     lots: 0,
     price: 0.0,
-    metal: "Gold",
+    metal: "",
     comment: ""
   });
 

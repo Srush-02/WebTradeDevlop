@@ -35,12 +35,14 @@ public class TradeRecordImpl implements TradeRecordService{
 		List<OutrightData> returnList = new ArrayList<>();
 
 		tradeDetailList = getDateBasedTrades(fromDate, toDate, accountlist, tradeDetailList, user);
+		System.out.println("tradeDetailList--->"+tradeDetailList);
 		returnList.addAll(mapper.tradeDetailListToreturnList(tradeDetailList));
 		return returnList;
 	}
 
 	private List<TradeDetails> getDateBasedTrades(String fromDateStr, String toDateStr, List<String> accountlist,
 			List<TradeDetails> tradeDetailList, String user) {
+		System.out.println("fromDateStr-toDate--->>"+fromDateStr+ "fromDate---"+toDateStr);
 
 		LocalDate fromDateLocalDate = LocalDate.parse(fromDateStr, longDateFormatter);
 		LocalDate toDateLocalDate = LocalDate.parse(toDateStr, longDateFormatter);
@@ -54,6 +56,8 @@ public class TradeRecordImpl implements TradeRecordService{
 		        .atZone(ZoneId.of("UTC"))
 		        .toInstant()
 		        .toEpochMilli();
+
+		System.out.println("tradeDetailList-toDate--->>"+toDate+ "fromDate---"+fromDate);
 
 		if (!accountlist.isEmpty()) {
 			List<String> listToSend = null;

@@ -53,14 +53,6 @@ public class TradeDetails implements Persistable<String>{
 	
 	@Transient
 	private boolean isSave = true;
-	
-	/*
-	 * @Column(insertable = false, updatable = false, name = "last_modified_ts")
-	 * 
-	 * @JsonProperty("eventTimestamp")
-	 * 
-	 * @Convert(converter = DateHandler.class) private long eventTimestamp;
-	 */
 
 
 	@Column(name = "created_ts")

@@ -32,7 +32,7 @@ public class TradeRecordController {
 	    }
 
 	
-	@GetMapping(value = "/order-monitor", produces = "application/json")
+	@GetMapping(value = "/trade-monitor", produces = "application/json")
 	public ResponseEntity<ApiHttpResponse> loadTradeData(
 			@RequestParam("account") List<String> account, 
 			@RequestParam("FD") String fromDate, @RequestParam("TD") String toDate) {

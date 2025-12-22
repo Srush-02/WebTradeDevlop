@@ -1,6 +1,5 @@
 package com.trade.utils;
 
-import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -39,7 +38,8 @@ public class TradeSaveDetails {
 
 		for (OutrightData currentRow : msgData) {
 			try {
-				String time = Instant.now().toEpochMilli() + "";
+				String time = LocalDate.now(ZoneId.systemDefault())
+		                .format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
 				String status = currentRow.getTradeType();
 				LocalDate date =  getTradeDate(status);
 
@@ -47,7 +47,6 @@ public class TradeSaveDetails {
 				System.out.println("currentRow--trade id-"+currentRow.getTraderUUID()+ "currentRow---"+currentRow);
 
 				TradeDetails tradeDetails = mapper.tradeDtoToSaveToDB(currentRow);
-				System.out.println("tradeDetails---"+tradeDetails);
 				if (status.equalsIgnoreCase("CANCEL")  || status.equalsIgnoreCase("MODIFY")) {
 					tradeDetails.setSave(false);
 				}
@@ -66,11 +65,6 @@ public class TradeSaveDetails {
 	
 	private LocalDate getTradeDate(String status) {
 		LocalDate tradeDate = LocalDate.now(ZoneId.of("UTC"));
-		/*
-		 * if (status.equalsIgnoreCase("NEW") || status.equalsIgnoreCase("MODIFY")) {
-		 * tradeDate =
-		 * ZonedDateTime.now(ZoneId.of(.getTimeZone())).withNano(0); }
-		 */
 		return tradeDate;
 	}
 	
@@ -90,10 +84,12 @@ public class TradeSaveDetails {
 			currentRow.setLastModifiedTimestamp(time);
 			break;
 		case "MODIFY" :
+			currentRow.setCreatedTimestamp(time);
 			currentRow.setLastModifiedBy(user);
 			currentRow.setLastModifiedTimestamp(time);
 			break;
 		case "CANCEL" :
+			currentRow.setCreatedTimestamp(time);
 			currentRow.setLastModifiedBy(user);//TODO need to check
 			currentRow.setLastModifiedTimestamp(time);
 			break;

@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 //  import { saveTrade } from '../api/tradeService';
 
 
-const METAL_OPTIONS = ["Gold", "Silver", "Platinum", "Palladium"];
+const METAL_OPTIONS = ["1AHD","AHD", "CAD", "1CAD", "1PBD", "PBD"];
 
 const TradeForm = () => {
   const [formData, setFormData] = useState({
-    buyer: '',
-    seller: '',
+    buyer: 'abciouou',
+    seller: 'ghj',
     metal: 'Gold',
-    lots: 0,
-    price: 0.0,
+    lots: "8897888",
+    price: "65.8",
     comment: ''
   });
 
@@ -40,7 +40,7 @@ const TradeForm = () => {
 
   return (
     <div style={{ padding: '30px', fontFamily: 'Arial, sans-serif', maxWidth: '400px' }}>
-      <h2 style={{ borderBottom: '2px solid #eee', paddingBottom: '10px' }}>Trade Entry</h2>
+      <h2 style={{ borderBottom: '2px solid #eee', paddingBottom: '10px' }}>Trade Capture</h2>
       <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
         <input name="buyer" placeholder="Buyer Name" onChange={handleChange} required style={inputStyle} />
         <input name="seller" placeholder="Seller Name" onChange={handleChange} required style={inputStyle} />
@@ -54,13 +54,13 @@ const TradeForm = () => {
 
 
         <div style={{ display: 'flex', gap: '10px' }}>
-          <input name="lots" type="number" placeholder="Lots" onChange={handleChange} style={inputStyle} />
-          <input name="price" type="number" step="0.01" placeholder="Price" onChange={handleChange} style={inputStyle} />
+          <input name="lots"  placeholder="Lots" onChange={handleChange} style={inputStyle} />
+          <input name="price" placeholder="Price" onChange={handleChange} style={inputStyle} />
         </div>
         
         <textarea name="comment" placeholder="Trade Comments" onChange={handleChange} style={{ ...inputStyle, height: '80px' }} />
         
-        <button type="submit" style={buttonStyle}>Submit to Backend</button>
+        <button type="submit" style={buttonStyle}>Save</button>
       </form>
     </div>
   );

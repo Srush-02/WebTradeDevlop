@@ -6,19 +6,31 @@ import axios from 'axios';
 
 export const saveTrade = async (formData, username) => {
   
-  const payload = [{
-    ...formData,
-    metal: formData.metal || "Gold", 
-    status: "NEW",
-    tradeMsgType: "NEW",
-    traderUUID: crypto.randomUUID(),
-    created_ts: new Date().toISOString()
+
+  const payload =
+   [{
+  "traderUUID": "...",
+  "metal": "...",
+  "buyer": "...",
+  "seller": "...",
+  "comment": "...",
+  "lots": 0,
+  "createdTimestamp": "...",
+  "price": 0,
+  "tradeType": "",
+  "rowNumber": 0,
+  "lastModifiedBy": "...",
+  "lastModifiedTimestamp": "...",
+  "createdBy": "..."
+
+
+
   }];
 
   return await axios.post('http://localhost:9091/save', payload, {
     headers: {
       'Content-Type': 'application/json',
-      'x-username': username
+      'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTc2NjM3MzExMSwiZXhwIjoxNzY2Mzc2NzExfQ.2gl-R31EmS-r8xMCDl7YPdZJrtxgr_nQs9XpWPuIYs8'
     }
   });
 };

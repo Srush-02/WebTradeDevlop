@@ -16,13 +16,17 @@ public interface MapStructMapper {
 	TradeDetails tradeDtoToSaveToDB(OutrightData currentRow);
 	
 	
-	default  String setNullIfEmptyString(String value) {
-		return value.isEmpty() ? null : value;
-	}
+	
 	
 	 
 		OutrightData orderDetailsToOrderTraderBean(TradeDetails orderDetail);
 	 List<OutrightData> tradeDetailListToreturnList(List<TradeDetails> orderDetailList);
-
+	 
+	 default String setNullIfEmptyString(String value) {
+		    if (value == null || value.isEmpty()) {
+		        return null;
+		    }
+		    return value;
+		}
 }
 

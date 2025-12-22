@@ -41,10 +41,13 @@ public class TradeController  {
 	@PostMapping(value = "/save", consumes = "application/json")
 	public ResponseEntity<ApiHttpResponse> createTrade(@RequestBody  List<OutrightData> msgData) {
 
-		Authentication authentication =
-	            SecurityContextHolder.getContext().getAuthentication();
-
-	    String user = authentication.getName();
+		/*
+		 * Authentication authentication =
+		 * SecurityContextHolder.getContext().getAuthentication();
+		 * 
+		 * String user = authentication.getName();
+		 */
+		String user ="srush";
 		logger.debug("TradeController createOutrightTrade: " + msgData, "-", user);
 
 		JsonNode resultSet = JacksonUtil.mapper.createArrayNode();
